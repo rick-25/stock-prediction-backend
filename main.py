@@ -21,9 +21,13 @@ def help():
 		if periods == None:
 			periods = '100'
 
-		predication = predict(company_symbol=symbol, periods=int(periods))
+		predication, error = predict(company_symbol=symbol, periods=int(periods))
+		print(error)
+
+		result = {"error": error, "predication": predication.to_dict(orient='records')}
 
 		response = jsonify(predication.to_json(orient='records'))
+		# response = jsonify(result)
 		response.headers.add("Access-Control-Allow-Origin", "*")
 
 		return response
